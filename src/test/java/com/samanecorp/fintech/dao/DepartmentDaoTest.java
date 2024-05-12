@@ -41,7 +41,6 @@ public class DepartmentDaoTest {
 		Assertions.assertTrue(result);
 		  
 		Assertions.assertEquals(4, departmentDao.list(departmentEntity).size());
-		 
 	}
 	
 }

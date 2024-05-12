@@ -103,8 +103,7 @@ class LoginServiceTestMockito {
 		  
 		  Mockito.lenient().when(loginDao.logException(anyString(), anyString()))
 		  .thenReturn(Optional.ofNullable(null));
-		  
-		    
+		  		    
 		  EntityNotFoundException entityNotFoundException = assertThrows(
 						  EntityNotFoundException.class,
 						  () -> loginService.logException("seck@samanecorporation.com", "passer123@")

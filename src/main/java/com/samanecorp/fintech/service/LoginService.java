@@ -73,7 +73,7 @@ public class LoginService {
 		return loginDao.logException(email, password)
 					   .map(user -> {
 						   	UserDTO userDto = UserMapper.userEntityToUserDto(user);
-						
+						   	logger.info("infos correct !");
 						   	return Optional.of(userDto) ;
 				}).orElseThrow( () -> new EntityNotFoundException("infos incorrect."));	
 	}

@@ -32,7 +32,8 @@ public class LoginServlet extends HttpServlet {
 		//logger.info("La valeur de val est {}", val);
 		//super.doGet(req, resp);
 		logger.info("Connexion ...");
-		loginService.loginMockito("", "");
+		//loginService.loginMockito("", "");
+		loginService.logException("contact@samanecorporation.com", "passer123@");
 		req.getRequestDispatcher("WEB-INF/welcome.jsp").forward(req, resp);
 	}
 

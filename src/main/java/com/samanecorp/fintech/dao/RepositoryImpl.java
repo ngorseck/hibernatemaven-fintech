@@ -60,11 +60,11 @@ public class RepositoryImpl<T> implements Repository<T> {
 		
        CriteriaBuilder cb = session.getCriteriaBuilder();
       
-       CriteriaQuery<T> cr = (CriteriaQuery<T>) cb.createQuery(t.getClass());
-       Root<T> root = (Root<T>) cr.from(t.getClass());
-       cr.select(root);
+       CriteriaQuery<T> cq = (CriteriaQuery<T>) cb.createQuery(t.getClass());
+       Root<T> root = (Root<T>) cq.from(t.getClass());
+       							cq.select(root);
               
-       return session.createQuery(cr).getResultList();
+       return session.createQuery(cq).getResultList();
 	
 	}
 
