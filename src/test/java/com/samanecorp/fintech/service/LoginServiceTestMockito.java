@@ -1,5 +1,6 @@
 package com.samanecorp.fintech.service;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -19,6 +20,7 @@ import org.mockito.quality.Strictness;
 import com.samanecorp.fintech.dao.LoginDao;
 import com.samanecorp.fintech.dto.UserDTO;
 import com.samanecorp.fintech.entities.UserEntity;
+import com.samanecorp.fintech.exception.EntityNotFoundException;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -73,5 +75,42 @@ class LoginServiceTestMockito {
 		  
 		  Assertions.assertTrue(user.isEmpty()); 
 	}
-	 
+
+	  @Test
+		void loginExceptionOK () {
+
+			UserEntity userEntity = new UserEntity();
+			userEntity.setId(1L);
+			userEntity.setEmail("contact@samanecorporation.com");
+			userEntity.setPassword("passer123@");
+			
+			when(loginDao.logException(anyString(), anyString()))
+				.thenReturn(Optional.ofNullable(userEntity));
+			
+			UserDTO userDto = new UserDTO();
+			userDto.setEmail("contact@samanecorporation.com");
+			userDto.setPassword("passer123@");
+			
+			Optional<UserDTO> user = loginService.logException(userDto.getEmail(), userDto.getPassword());
+			
+			Assertions.assertTrue(user.isPresent());
+		}
+		
+		
+		
+		  @Test
+		  void loginExceptionKO () {
+		  
+		  Mockito.lenient().when(loginDao.logException(anyString(), anyString()))
+		  .thenReturn(Optional.ofNullable(null));
+		  
+		    
+		  EntityNotFoundException entityNotFoundException = assertThrows(
+						  EntityNotFoundException.class,
+						  () -> loginService.logException("seck@samanecorporation.com", "passer123@")
+				  );
+		  Assertions.assertEquals("infos incorrect.", entityNotFoundException.getMessage());
+	}
+		 
+
 }

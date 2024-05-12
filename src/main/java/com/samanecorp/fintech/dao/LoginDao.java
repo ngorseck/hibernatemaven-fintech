@@ -38,6 +38,20 @@ public class LoginDao {
 		}
 		return Optional.ofNullable(result);
 	}
+	public Optional<UserEntity> logException (String email, String pwd) {
+		UserEntity result = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+
+		CriteriaBuilder cb = session.getCriteriaBuilder();
+		CriteriaQuery<UserEntity> cr = cb.createQuery(UserEntity.class);
+		Root<UserEntity> user = cr.from(UserEntity.class);
+								cr.select(user);
+								cr.where(cb.equal(user.get("email"), email));
+								cr.where(cb.equal(user.get("password"), pwd));
+		
+		return Optional.ofNullable(session.createQuery(cr).getSingleResult());
+	}
+	
 	public Optional<UserEntity> loginUser(String email, String pwd) {
 		UserEntity userEntity = null;
 		Transaction transaction = null;

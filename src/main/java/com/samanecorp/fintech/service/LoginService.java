@@ -11,6 +11,7 @@ import com.samanecorp.fintech.dao.LoginDao;
 import com.samanecorp.fintech.dao.UserImpl;
 import com.samanecorp.fintech.dto.UserDTO;
 import com.samanecorp.fintech.entities.UserEntity;
+import com.samanecorp.fintech.exception.EntityNotFoundException;
 import com.samanecorp.fintech.mapper.UserMapper;
 
 public class LoginService {
@@ -63,6 +64,18 @@ public class LoginService {
 			return Optional.ofNullable(null);
 		}
 		
+	}
+	
+	public Optional<UserDTO> logException (String email, String password) {
+		
+		logger.info("Tentattive email : {} pwd : {}", email, password);
+		
+		return loginDao.logException(email, password)
+					   .map(user -> {
+						   	UserDTO userDto = UserMapper.userEntityToUserDto(user);
+						
+						   	return Optional.of(userDto) ;
+				}).orElseThrow( () -> new EntityNotFoundException("infos incorrect."));	
 	}
 	
 	public boolean save (UserDTO userDTO) {
