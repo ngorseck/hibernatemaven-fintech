@@ -1,10 +1,9 @@
 package com.samanecorp.fintech.dao;
-
-import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
@@ -25,9 +24,14 @@ public class LoginDao {
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<UserEntity> cr = cb.createQuery(UserEntity.class);
 		Root<UserEntity> user = cr.from(UserEntity.class);
-								cr.select(user);
-								cr.where(cb.equal(user.get("email"), email));
-								cr.where(cb.equal(user.get("password"), pwd));
+					
+		Predicate predicateEmail = cb.equal(user.get("email"), email);
+		Predicate predicatePwd = cb.equal(user.get("password"), pwd);
+		Predicate finalPredicate = cb.and(predicateEmail, predicatePwd);
+		
+		cr.select(user);
+		cr.where(finalPredicate);
+		
 		try {
 			result = session.createQuery(cr).getSingleResult();
 			logger.info("Connexion ok");
@@ -39,15 +43,18 @@ public class LoginDao {
 		return Optional.ofNullable(result);
 	}
 	public Optional<UserEntity> logException (String email, String pwd) {
-		UserEntity result = null;
 		Session session = HibernateUtil.getSessionFactory().openSession();
 
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<UserEntity> cr = cb.createQuery(UserEntity.class);
 		Root<UserEntity> user = cr.from(UserEntity.class);
-								cr.select(user);
-								cr.where(cb.equal(user.get("email"), email));
-								cr.where(cb.equal(user.get("password"), pwd));
+		//Predicate pour la clause where
+		Predicate predicateEmail = cb.equal(user.get("email"), email);
+		Predicate predicatePwd = cb.equal(user.get("password"), pwd);
+		Predicate finalPredicate = cb.and(predicateEmail, predicatePwd);
+		
+		cr.select(user);
+		cr.where(finalPredicate);
 		
 		return Optional.ofNullable(session.createQuery(cr).getSingleResult());
 	}

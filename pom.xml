@@ -9,31 +9,33 @@
 	<name>fintech</name>
 
 	<dependencies>
-		<!-- logger-->
+		<!-- logger -->
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 			<version>1.2.6</version>
 		</dependency>
-		<!-- Pour le persistance -->
+		<!-- Pour le persistance javax -->
 		<dependency>
           <groupId>org.jboss.spec.javax.ejb</groupId>
           <artifactId>jboss-ejb-api_3.1_spec</artifactId>
           <version>1.0.1.Final</version>
           <scope>provided</scope>
 		</dependency>
+		<!-- JSTL dependencies -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
+		<!-- Mysql connector dependencies -->
 		<dependency>
 		    <groupId>mysql</groupId>
 		    <artifactId>mysql-connector-java</artifactId>
 		    <scope>runtime</scope>
 		    <version>8.0.13</version>
 		</dependency>
-		<!-- Hibernate-->
+		<!-- Hibernate -->
 		<dependency>
 		    <groupId>org.hibernate</groupId>
 		    <artifactId>hibernate-entitymanager</artifactId>
@@ -45,14 +47,14 @@
 				</exclusion>
 			</exclusions>-->
 		</dependency>
-		<!-- cette dependence remplace l'exclusion avec une version adapté pour tomcat et pour les tests-->
+		<!-- cette dependence remplace l'exclusion avec une version adapté pour tomcat et pour les tests -->
 		<dependency>
 			<groupId>net.bytebuddy</groupId>
 			<artifactId>byte-buddy</artifactId>
 			<version>1.14.12</version>
 			<scope>compile</scope>
 		</dependency>
-		<!-- Test-->
+		<!-- Test JUnit 5 and mockito -->
 		<dependency>
 		    <groupId>org.junit.jupiter</groupId>
 		    <artifactId>junit-jupiter-engine</artifactId>

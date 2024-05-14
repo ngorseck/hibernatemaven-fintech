@@ -68,7 +68,7 @@ public class LoginService {
 	
 	public Optional<UserDTO> logException (String email, String password) {
 		
-		logger.info("Tentattive email : {} pwd : {}", email, password);
+		logger.info("Tentative email : {} pwd : {}", email, password);
 		
 		return loginDao.logException(email, password)
 					   .map(user -> {

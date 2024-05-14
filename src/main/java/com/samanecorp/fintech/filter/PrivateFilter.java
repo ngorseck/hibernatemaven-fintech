@@ -36,12 +36,13 @@ public class PrivateFilter implements Filter {
 		HttpServletResponse res = (HttpServletResponse) response;
 		HttpSession session = req.getSession();
 		// on r´ecup`ere le nom de la session
-		String nom = (String)session.getAttribute("nom");
+		String username = (String)session.getAttribute("username");
 		// on r´ecup`ere le chemin demand´e par l’utilisateur
 		String chemin = req.getServletPath();
+		
 		// on r´ecup`ere la m´ethode HTTP utilis´ee (GET ou POST)
-		String methode = req.getMethod();
-		if (nom != null || chemin.equals("/") || chemin.equals("/login") || chemin.equals("/index.jsp") || chemin.startsWith("/") && methode.equals("POST"))
+		String method = req.getMethod();
+		if (username != null || chemin.equals("/") || chemin.equals("/login")|| chemin.equals("/sigup") || chemin.equals("/logout") || chemin.equals("/index.jsp") || chemin.equals("/login") && method.equalsIgnoreCase("POST") || chemin.equals("/singup") && method.equalsIgnoreCase("POST") || chemin.startsWith("/public/"))
 			chain.doFilter(request, response);
 		else
 			res.sendRedirect(req.getContextPath());//retourne le chemin racine de l'application
