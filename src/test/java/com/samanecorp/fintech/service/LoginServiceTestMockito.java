@@ -33,7 +33,6 @@ class LoginServiceTestMockito {
 	
 	@BeforeEach
 	void init() {
-		loginService = new LoginService();
 		loginDao = mock(LoginDao.class);
 		loginService.setLoginDao(loginDao);
 	}
